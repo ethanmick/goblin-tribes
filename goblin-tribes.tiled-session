@@ -1,0 +1,45 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "map_v001.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "map_v001.tmx": {
+            "scale": 2.51,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 155.17928286852592,
+                "y": 170.91633466135457
+            }
+        },
+        "tileset_v01.tsx": {
+            "scaleInDock": 6.4179,
+            "scaleInEditor": 9.58
+        }
+    },
+    "last.exportedFilePath": "/Users/ethan/Documents/goblin-tribes/src/assets",
+    "last.imagePath": "/Users/ethan/Documents/goblin-tribes/src/assets",
+    "map.height": 30,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 8,
+    "map.tileWidth": 8,
+    "openFiles": [
+        "map_v001.tmx",
+        "tileset_v01.tsx"
+    ],
+    "project": "goblin-tribes.tiled-project",
+    "recentFiles": [
+        "tileset_v01.tsx",
+        "map_v001.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 8,
+        "width": 8
+    }
+}
