@@ -11,6 +11,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "easystarjs": "0.4.4"
+  },
   "devDependencies": {
     "@babel/core": "7.19.0",
     "@babel/preset-env": "7.19.0",
