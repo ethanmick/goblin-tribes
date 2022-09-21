@@ -1,10 +1,12 @@
 import { Goblin } from './goblin'
+import { GoblinWorld } from './goblin-world'
 
 export class Game extends Phaser.Scene {
+  map!: GoblinWorld
   controls!: Phaser.Cameras.Controls.FixedKeyControl
-
   units!: Phaser.Physics.Arcade.Group
   selected?: Goblin
+  last?: Phaser.Tilemaps.Tile
 
   constructor() {
     super('game')
@@ -20,12 +22,21 @@ export class Game extends Phaser.Scene {
     this.input.mouse.disableContextMenu()
     const self = this
     this.units = this.physics.add.group()
+    this.units.runChildUpdate = true
 
-    const map = this.make.tilemap({ key: 'map' })
-    const tileset = map.addTilesetImage('tileset_v01', 'tileset_01')
-    const layer = map.createLayer('terrain', tileset, 0, 0)
+    this.map = new GoblinWorld(this)
+    const tileset = this.map.tilemap.addTilesetImage(
+      'tileset_v01',
+      'tileset_01'
+    )
+    const layer = this.map.tilemap.createLayer('terrain', tileset, 0, 0)
 
-    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels)
+    this.cameras.main.setBounds(
+      0,
+      0,
+      this.map.tilemap.widthInPixels,
+      this.map.tilemap.heightInPixels
+    )
     this.cameras.main.zoom = 8
     this.cameras.main.setScroll(-300, -150) // change
 
@@ -49,8 +60,9 @@ export class Game extends Phaser.Scene {
     for (let i = 0; i < 5; i++) {
       const goblin = new Goblin(
         this,
-        Phaser.Math.Between(100, 200),
-        Phaser.Math.Between(100, 200)
+        this.map,
+        Phaser.Math.Between(10, 20),
+        Phaser.Math.Between(10, 20)
       )
       this.units.add(goblin)
 
@@ -65,19 +77,27 @@ export class Game extends Phaser.Scene {
     }
 
     this.input.on('pointerdown', (p: Phaser.Input.Pointer) => {
-      console.log(p)
       if (this.selected) {
-        this.tweens.add({
-          targets: this.selected,
-          x: p.worldX,
-          y: p.worldY,
-          duration: 200,
-        })
+        const tile = this.map.tilemap.getTileAtWorldXY(p.worldX, p.worldY)
+        this.selected.moveTo(tile.x, tile.y)
       }
     })
   }
 
+  // var tile = layer.getTileAtWorldXY(player.x - 32, player.y, true);
+
   update(t: number, dt: number) {
     this.controls.update(dt)
+
+    if (this.last) {
+      this.last.alpha = 1
+    }
+
+    const tile = this.map.tilemap.getTileAtWorldXY(
+      this.input.mousePointer.worldX,
+      this.input.mousePointer.worldY
+    )
+    tile.alpha = 0.5
+    this.last = tile
   }
 }
