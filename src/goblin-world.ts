@@ -1,8 +1,16 @@
+import { Tiles } from './tiles'
+import { BaseTile } from './tiles/base'
+
 export class GoblinWorld {
   public readonly tilemap: Phaser.Tilemaps.Tilemap
 
   constructor(public readonly scene: Phaser.Scene) {
     this.tilemap = scene.add.tilemap('map')
+  }
+
+  getTileData(tileX: number, tileY: number): BaseTile {
+    const tile = this.tilemap.getTileAt(tileX, tileY)
+    return Tiles[`${tile.layer.name}.${tile.index}`](tile.properties)
   }
 
   getCollisionGrid(): Array<Array<number>> {

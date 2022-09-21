@@ -7,6 +7,7 @@ export class Game extends Phaser.Scene {
   units!: Phaser.Physics.Arcade.Group
   selected?: Goblin
   last?: Phaser.Tilemaps.Tile
+  shiftKey!: Phaser.Input.Keyboard.Key
 
   constructor() {
     super('game')
@@ -82,6 +83,8 @@ export class Game extends Phaser.Scene {
         this.selected.moveTo(tile.x, tile.y)
       }
     })
+
+    this.shiftKey = this.input.keyboard.addKey('SHIFT')
   }
 
   // var tile = layer.getTileAtWorldXY(player.x - 32, player.y, true);
@@ -99,5 +102,10 @@ export class Game extends Phaser.Scene {
     )
     tile.alpha = 0.5
     this.last = tile
+
+    if (this.shiftKey.isDown) {
+      const props = this.map.getTileData(tile.x, tile.y)
+      console.log('Name', props.name)
+    }
   }
 }
